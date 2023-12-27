@@ -6,85 +6,193 @@ class TestApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.blueAccent,
-            title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Good Morning',style: TextStyle(color: Colors.white,fontSize: 15),),
-              Text('Guest',style: TextStyle(color: Colors.white,fontSize: 20),),
-      
-            ],
-          ),
-          actions: [IconButton(onPressed: (){}, icon: Icon(Icons.translate,color: Colors.white,),),
-            IconButton(onPressed: (){}, icon: Icon(Icons.person,color: Colors.white,),),
-          ],
-          ),
-          body: Center(
-            child: Column(
+      home: SafeArea(
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.blueAccent,
+              title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-      
-               Container(padding: EdgeInsets.all(8.0),
-                 decoration: BoxDecoration(
-                   border: Border.all(
-                     color: Colors.black, // Border color
-                     width: 2.0, // Border width
-                   ),
-                 ),
-                 child: Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: Column(
-                     children: [
-                       Text('Metro Services'),
-                       SingleChildScrollView(
-                         scrollDirection: Axis.horizontal,
-                         child: Row(
-                           children: [
-                             ElevatedButton(onPressed: (){
-                               Navigator.push(context,
-                                   MaterialPageRoute(builder: (context) => JourneyPage()));
-                                                  }, child: Text('Plan your \n Trip',style: TextStyle(fontSize: 10),)),
-                             ElevatedButton(onPressed: (){}, child: Text('Book QR \n ticket',style: TextStyle(fontSize: 10))),
-                             ElevatedButton(onPressed: (){}, child: Text('Smart Card \n Top-UP',style: TextStyle(fontSize: 10))),
-                           ],
-                         ),
-                       ),
-                       SingleChildScrollView(
-                         scrollDirection: Axis.horizontal,
-                         child: Row(
-                           children: [
-                             ElevatedButton(onPressed: (){}, child: Text('Fare \nCalculator')),
-                             ElevatedButton(onPressed: (){}, child: Text('Metro Lines')),
-                             ElevatedButton(onPressed: (){}, child: Text('Metro Map')),
-                           ],
-                         ),
-                       ),
-                     ],
-                   ),
-                 ),
-               ),
-                Container(padding: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black, // Border color
-                      width: 2.0, // Border width
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-
-      
-                      ],
-                    ),
-                  ),
-                )
+                Text('Good Morning',style: TextStyle(color: Colors.white,fontSize: 10,fontStyle: FontStyle.italic),),
+                Text('Guest',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+        
               ],
             ),
+            actions: [IconButton(onPressed: (){}, icon: Icon(Icons.translate,color: Colors.white,),),
+              IconButton(onPressed: (){}, icon: Icon(Icons.person,color: Colors.white,),),
+            ],
+            ),
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+
+                   Container(
+                     decoration: BoxDecoration(
+                       border: Border.all(
+                         color: Colors.black, // Border color
+                         width: 2.0, // Border width
+                       ),
+                       borderRadius: BorderRadius.circular(20),
+                     ),
+                     child: Padding(
+                       padding: const EdgeInsets.all(18.0),
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Text('Metro Services',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,),),
+                           SizedBox(height: 20,),
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             crossAxisAlignment: CrossAxisAlignment.center,
+                             children: [
+                               Flexible(
+                                 child: ElevatedButton(
+                                   onPressed: () {
+                                     Navigator.push(
+                                       context,
+                                       MaterialPageRoute(builder: (context) => JourneyPage()),
+                                     );
+                                   },
+                                   style: ElevatedButton.styleFrom(
+                                     primary: Colors.transparent, // Set button background color to transparent
+                                     elevation: 0, // Remove button elevation
+                                   ),
+                                   child: Column(
+                                     children: [
+                                       Icon(Icons.train_outlined,color: Colors.red,),
+                                       Text(
+                                         'Plan your Trip',
+                                         style: TextStyle(fontSize: 15,color: Colors.black),
+                                         textAlign: TextAlign.center,
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                               ),
+                               Flexible(
+                                 child: ElevatedButton(
+                                   onPressed: () {},
+                                   style: ElevatedButton.styleFrom(
+                                     primary: Colors.transparent,
+                                     elevation: 0,
+                                   ),
+                                   child: Column(
+                                     children: [
+                                       Icon(Icons.qr_code,color: Colors.red,),
+                                       Text(
+                                         'Book QR ticket',
+                                         style: TextStyle(fontSize: 15,color: Colors.black),
+                                         textAlign: TextAlign.center,
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                               ),
+                               Flexible(
+                                 child: ElevatedButton(
+                                   onPressed: () {},
+                                   style: ElevatedButton.styleFrom(
+                                     primary: Colors.transparent,
+                                     elevation: 0,
+                                   ),
+                                   child: Column(
+                                     children: [
+                                       Icon(Icons.credit_card,color: Colors.red,),
+                                       Text(
+                                         'Smart Card Top-UP',
+                                         style: TextStyle(fontSize: 15,color: Colors.black),
+                                         textAlign: TextAlign.center,
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                               ),
+                             ],
+                           ),
+                           SizedBox(height: 20,),
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             crossAxisAlignment: CrossAxisAlignment.center,
+                             children: [
+                               Flexible(
+                                 child: ElevatedButton(
+                                   onPressed: () {
+                                     Navigator.push(
+                                       context,
+                                       MaterialPageRoute(builder: (context) => JourneyPage()),
+                                     );
+                                   },
+                                   style: ElevatedButton.styleFrom(
+                                     primary: Colors.transparent, // Set button background color to transparent
+                                     elevation: 0, // Remove button elevation
+                                   ),
+                                   child: Column(
+                                     children: [
+                                       Icon(Icons.calculate_outlined,color: Colors.red,),
+                                       Text(
+                                         'Fare \n Calculator',
+                                         style: TextStyle(fontSize: 15,color: Colors.black),
+                                         textAlign: TextAlign.center,
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                               ),
+                               Flexible(
+                                 child: ElevatedButton(
+                                   onPressed: () {},
+                                   style: ElevatedButton.styleFrom(
+                                     primary: Colors.transparent,
+                                     elevation: 0,
+                                   ),
+                                   child: Column(
+                                     children: [
+                                       Icon(Icons.lock_open_rounded,color: Colors.red,),
+                                       Text(
+                                         'Rent a Locker',
+                                         style: TextStyle(fontSize: 15,color: Colors.black),
+                                         textAlign: TextAlign.center,
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                               ),
+                               Flexible(
+                                 child: ElevatedButton(
+                                   onPressed: () {},
+                                   style: ElevatedButton.styleFrom(
+                                     primary: Colors.transparent,
+                                     elevation: 0,
+                                   ),
+                                   child: Column(
+                                     children: [
+                                       Icon(Icons.person_pin_circle_outlined,color: Colors.red,),
+                                       Text(
+                                         'Courier',
+                                         style: TextStyle(fontSize: 15,color: Colors.black),
+                                         textAlign: TextAlign.center,
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                               ),
+                             ],
+                           ),
+
+
+
+                         ],
+                       ),
+                     ),
+                   ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+      ),
     );
   }
 }
