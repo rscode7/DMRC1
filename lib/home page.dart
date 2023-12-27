@@ -42,7 +42,7 @@ class TestApp extends StatelessWidget {
                          child: Row(
                            children: [
                              ElevatedButton(onPressed: (){
-                                                  }, child: Text('Plan your \n Trip',style: TextStyle(fontSize: 10),)),
+                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => JourneyPage()));                          }, child: Text('Plan your \n Trip',style: TextStyle(fontSize: 10),)),
                              ElevatedButton(onPressed: (){}, child: Text('Book QR \n ticket',style: TextStyle(fontSize: 10))),
                              ElevatedButton(onPressed: (){}, child: Text('Smart Card \n Top-UP',style: TextStyle(fontSize: 10))),
                            ],
