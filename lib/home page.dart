@@ -15,7 +15,7 @@ class TestApp extends StatelessWidget {
               children: [
                 Text('Good Morning',style: TextStyle(color: Colors.white,fontSize: 10,fontStyle: FontStyle.italic),),
                 Text('Guest',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
-        
+
               ],
             ),
             actions: [IconButton(onPressed: (){}, icon: Icon(Icons.translate,color: Colors.white,),),
@@ -73,7 +73,12 @@ class TestApp extends StatelessWidget {
                                ),
                                Flexible(
                                  child: ElevatedButton(
-                                   onPressed: () {},
+                                   onPressed: () {
+                                     Navigator.push(
+                                       context,
+                                       MaterialPageRoute(builder: (context) => BookQRTicketPage()),
+                                     );
+                                   },
                                    style: ElevatedButton.styleFrom(
                                      primary: Colors.transparent,
                                      elevation: 0,
@@ -92,7 +97,12 @@ class TestApp extends StatelessWidget {
                                ),
                                Flexible(
                                  child: ElevatedButton(
-                                   onPressed: () {},
+                                   onPressed: () {
+                                     Navigator.push(
+                                       context,
+                                       MaterialPageRoute(builder: (context) => AddMetroSmartCardPage()),
+                                     );
+                                   },
                                    style: ElevatedButton.styleFrom(
                                      primary: Colors.transparent,
                                      elevation: 0,
@@ -121,7 +131,7 @@ class TestApp extends StatelessWidget {
                                    onPressed: () {
                                      Navigator.push(
                                        context,
-                                       MaterialPageRoute(builder: (context) => JourneyPage()),
+                                       MaterialPageRoute(builder: (context) => CalculateFare()),
                                      );
                                    },
                                    style: ElevatedButton.styleFrom(
@@ -360,3 +370,237 @@ class _JourneyPageState extends State<JourneyPage> {
 }
 
 
+class BookQRTicketPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Book QR Ticket'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Depart From:',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            DropdownButton<String>(
+              value: 'Select Station',
+              onChanged: (String? newValue) {
+                // Handle dropdown value change
+              },
+              items: <String>[
+                'Select Station',
+                'Station A',
+                'Station B',
+                'Station C',
+                // Add more station names as needed
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Destination:',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            DropdownButton<String>(
+              value: 'Select Station',
+              onChanged: (String? newValue) {
+                // Handle dropdown value change
+              },
+              items: <String>[
+                'Select Station',
+                'Station A',
+                'Station B',
+                'Station C',
+                // Add more station names as needed
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Choose Route Preference:',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Row(
+              children: [
+                Radio(
+                  value: 0,
+                  groupValue: 0,
+                  onChanged: (int? value) {
+                    // Handle radio button selection
+                  },
+                ),
+                Text('Shortest Route'),
+                Radio(
+                  value: 1,
+                  groupValue: 0,
+                  onChanged: (int? value) {
+                    // Handle radio button selection
+                  },
+                ),
+                Text('Min Interchange'),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Handle button press
+              },
+              child: Text('Show Fare'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddMetroSmartCardPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add Metro Smart Card'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Enter Your Smart Card Number:',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            TextFormField(keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: 'Smart Card Number',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Your Name:',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                hintText: 'Your Name',
+              ),
+            ),
+            SizedBox(height: 24.0),
+            ElevatedButton(
+              onPressed: () {
+                // Handle saving data
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CalculateFare extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Calculate Fare'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  value: 0,
+                  groupValue: 0,
+                  onChanged: (int? value) {
+                    // Handle radio button selection
+                  },
+                ),
+                Text('Shortest Route'),
+                Radio(
+                  value: 1,
+                  groupValue: 0,
+                  onChanged: (int? value) {
+                    // Handle radio button selection
+                  },
+                ),
+                Text('Min Interchange'),
+              ],
+            ),
+            SizedBox(height: 10,),
+            Text(
+              'Depart From:',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            DropdownButton<String>(
+              value: 'Select Station',
+              onChanged: (String? newValue) {
+                // Handle dropdown value change
+              },
+              items: <String>[
+                'Select Station',
+                'Station A',
+                'Station B',
+                'Station C',
+                // Add more station names as needed
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Destination:',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            DropdownButton<String>(
+              value: 'Select Station',
+              onChanged: (String? newValue) {
+                // Handle dropdown value change
+              },
+              items: <String>[
+                'Select Station',
+                'Station A',
+                'Station B',
+                'Station C',
+                // Add more station names as needed
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+
+
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Handle button press
+              },
+              child: Text('Calculate Fare'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
