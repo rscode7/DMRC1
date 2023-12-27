@@ -42,8 +42,6 @@ class TestApp extends StatelessWidget {
                          child: Row(
                            children: [
                              ElevatedButton(onPressed: (){
-                               Navigator.push(context,
-                                   MaterialPageRoute(builder: (context) => JourneyPage()));
                                                   }, child: Text('Plan your \n Trip',style: TextStyle(fontSize: 10),)),
                              ElevatedButton(onPressed: (){}, child: Text('Book QR \n ticket',style: TextStyle(fontSize: 10))),
                              ElevatedButton(onPressed: (){}, child: Text('Smart Card \n Top-UP',style: TextStyle(fontSize: 10))),
@@ -75,7 +73,13 @@ class TestApp extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-
+                        Row(
+                          children: [
+                            ElevatedButton(onPressed: (){}, child: Text('Nearest \nMetro Station')),
+                            ElevatedButton(onPressed: (){}, child: Text('Search \nStation')),
+                            ElevatedButton(onPressed: (){}, child: Text('Timings')),
+                          ],
+                        ),
       
                       ],
                     ),
