@@ -1,7 +1,21 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dmrc1/Journey.dart';
 import 'package:flutter/material.dart';
-class TestApp extends StatelessWidget {
+class TestApp extends StatefulWidget {
   const TestApp({super.key});
+
+  @override
+  State<TestApp> createState() => _TestAppState();
+}
+
+class _TestAppState extends State<TestApp> {
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  // Function to play the audio file
+  void playAudio() async {
+    // Replace 'path_to_your_audio_file.mp3' with the actual path to your audio file
+    await audioPlayer.play('assets/test.mp3' as Source);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +32,10 @@ class TestApp extends StatelessWidget {
 
               ],
             ),
-            actions: [IconButton(onPressed: (){}, icon: Icon(Icons.translate,color: Colors.white,),),
+            actions: [
+              IconButton(onPressed: (){playAudio();}, icon: Icon(Icons.record_voice_over,color: Colors.white,),),
+
+              IconButton(onPressed: (){}, icon: Icon(Icons.translate,color: Colors.white,),),
               IconButton(onPressed: (){}, icon: Icon(Icons.person,color: Colors.white,),),
             ],
             ),
@@ -159,9 +176,9 @@ class TestApp extends StatelessWidget {
                                    ),
                                    child: Column(
                                      children: [
-                                       Icon(Icons.lock_open_rounded,color: Colors.red,),
+                                       Icon(Icons.stacked_line_chart_sharp,color: Colors.red,),
                                        Text(
-                                         'Rent a Locker',
+                                         'Metro Lines',
                                          style: TextStyle(fontSize: 15,color: Colors.black),
                                          textAlign: TextAlign.center,
                                        ),
@@ -178,9 +195,9 @@ class TestApp extends StatelessWidget {
                                    ),
                                    child: Column(
                                      children: [
-                                       Icon(Icons.person_pin_circle_outlined,color: Colors.red,),
+                                       Icon(Icons.timer,color: Colors.red,),
                                        Text(
-                                         'Courier',
+                                         'Timings',
                                          style: TextStyle(fontSize: 15,color: Colors.black),
                                          textAlign: TextAlign.center,
                                        ),
