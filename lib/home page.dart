@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dmrc1/Journey.dart';
 import 'package:flutter/material.dart';
+import 'package:shake/shake.dart';
 class TestApp extends StatefulWidget {
   const TestApp({super.key});
 
@@ -15,6 +16,37 @@ class _TestAppState extends State<TestApp> {
   void playAudio() async {
     // Replace 'path_to_your_audio_file.mp3' with the actual path to your audio file
     await audioPlayer.play('assets/test.mp3' as Source);
+  }
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ShakeDetector.autoStart(
+      onPhoneShake: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => JourneyPage()),
+        );
+      },
+      minimumShakeCount: 2,
+      shakeSlopTimeMS: 1000,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
+    ShakeDetector.autoStart(
+      onPhoneShake: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BookQRTicketPage()),
+        );
+      },
+      minimumShakeCount: 4,
+      shakeSlopTimeMS: 500,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
+
+    // To close: detector.stopListening();
+    // ShakeDetector.waitForStart() waits for user to call detector.startListening();
   }
 
   @override
@@ -223,6 +255,12 @@ class _TestAppState extends State<TestApp> {
     );
   }
 }
+
+
+
+
+
+
 
 
 class JourneyPage extends StatefulWidget {
@@ -449,25 +487,28 @@ class BookQRTicketPage extends StatelessWidget {
               'Choose Route Preference:',
               style: TextStyle(fontSize: 16.0),
             ),
-            Row(
-              children: [
-                Radio(
-                  value: 0,
-                  groupValue: 0,
-                  onChanged: (int? value) {
-                    // Handle radio button selection
-                  },
-                ),
-                Text('Shortest Route'),
-                Radio(
-                  value: 1,
-                  groupValue: 0,
-                  onChanged: (int? value) {
-                    // Handle radio button selection
-                  },
-                ),
-                Text('Min Interchange'),
-              ],
+             SingleChildScrollView(
+               scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Radio(
+                    value: 0,
+                    groupValue: 0,
+                    onChanged: (int? value) {
+                      // Handle radio button selection
+                    },
+                  ),
+                  Text('Shortest Route'),
+                  Radio(
+                    value: 1,
+                    groupValue: 0,
+                    onChanged: (int? value) {
+                      // Handle radio button selection
+                    },
+                  ),
+                  Text('Min Interchange'),
+                ],
+              ),
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
@@ -540,25 +581,28 @@ class CalculateFare extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Radio(
-                  value: 0,
-                  groupValue: 0,
-                  onChanged: (int? value) {
-                    // Handle radio button selection
-                  },
-                ),
-                Text('Shortest Route'),
-                Radio(
-                  value: 1,
-                  groupValue: 0,
-                  onChanged: (int? value) {
-                    // Handle radio button selection
-                  },
-                ),
-                Text('Min Interchange'),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Radio(
+                    value: 0,
+                    groupValue: 0,
+                    onChanged: (int? value) {
+                      // Handle radio button selection
+                    },
+                  ),
+                  Text('Shortest Route'),
+                  Radio(
+                    value: 1,
+                    groupValue: 0,
+                    onChanged: (int? value) {
+                      // Handle radio button selection
+                    },
+                  ),
+                  Text('Min Interchange'),
+                ],
+              ),
             ),
             SizedBox(height: 10,),
             Text(

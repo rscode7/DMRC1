@@ -1,24 +1,23 @@
 import 'package:dmrc1/home%20page.dart';
 import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
-class TestApp extends StatefulWidget {
-  const TestApp({super.key});
+class ShakeApp extends StatefulWidget {
+  const ShakeApp({super.key});
 
   @override
-  State<TestApp> createState() => _TestAppState();
+  State<ShakeApp> createState() => _ShakeAppState();
 }
 
-class _TestAppState extends State<TestApp> {
-  @override
+class _ShakeAppState extends State<ShakeApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
     ShakeDetector.autoStart(
       onPhoneShake: () {
         Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => JourneyPage()),
-    );
+          context,
+          MaterialPageRoute(builder: (context) => JourneyPage()),
+        );
       },
       minimumShakeCount: 1,
       shakeSlopTimeMS: 500,

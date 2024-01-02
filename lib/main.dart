@@ -4,7 +4,9 @@ import 'package:dmrc1/home%20page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp( MaterialApp(home: TestApp()));
+  runApp( MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen()));
 }
 
 
@@ -21,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => TestApp()),
+        MaterialPageRoute(builder: (context) => NoticePage()),
       );
     });
   }
@@ -60,5 +62,31 @@ class HomePage extends StatelessWidget {
         child: Text('Welcome to the DMRC!'),
       ),
     );
+  }
+}
+class NoticePage extends StatelessWidget {
+  const NoticePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('How to use App'),
+              Text('Shake 2 times to Plan your Trip'),
+              Text('Shake 4 times to Book QR Ticket'),
+              ElevatedButton(onPressed: (){Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TestApp()),
+              );}, child: Text('OK'))
+            ],
+          ),
+        ),
+      ),
+    );
+
   }
 }
