@@ -20,27 +20,32 @@ class _TestAppState extends State<TestApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    int shakeCount = 0;
+
     ShakeDetector.autoStart(
       onPhoneShake: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => JourneyPage()),
-        );
+        shakeCount++;
+
+        // Check the number of shakes and perform corresponding operations
+        if (shakeCount == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => JourneyPage()),
+          );
+        } else if (shakeCount == 4) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => BookQRTicketPage()),
+          );
+        }
+
+        // Reset the shake count after each set of operations
+        if (shakeCount >= 4) {
+          shakeCount = 0;
+        }
       },
       minimumShakeCount: 2,
-      shakeSlopTimeMS: 1000,
-      shakeCountResetTime: 3000,
-      shakeThresholdGravity: 2.7,
-    );
-    ShakeDetector.autoStart(
-      onPhoneShake: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookQRTicketPage()),
-        );
-      },
-      minimumShakeCount: 4,
-      shakeSlopTimeMS: 500,
+      shakeSlopTimeMS: 300,
       shakeCountResetTime: 3000,
       shakeThresholdGravity: 2.7,
     );
