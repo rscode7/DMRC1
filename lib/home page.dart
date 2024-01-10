@@ -45,7 +45,7 @@ class _TestAppState extends State<TestApp> {
         }
       },
       minimumShakeCount: 2,
-      shakeSlopTimeMS: 300,
+      shakeSlopTimeMS: 400,
       shakeCountResetTime: 3000,
       shakeThresholdGravity: 2.7,
     );
@@ -206,7 +206,12 @@ class _TestAppState extends State<TestApp> {
                                ),
                                Flexible(
                                  child: ElevatedButton(
-                                   onPressed: () {},
+                                   onPressed: () {
+                                     Navigator.push(
+                                       context,
+                                       MaterialPageRoute(builder: (context) => MetroLines()),
+                                     );
+                                   },
                                    style: ElevatedButton.styleFrom(
                                      primary: Colors.transparent,
                                      elevation: 0,
@@ -225,16 +230,19 @@ class _TestAppState extends State<TestApp> {
                                ),
                                Flexible(
                                  child: ElevatedButton(
-                                   onPressed: () {},
+                                   onPressed: () {
+                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Help()),
+                                     );
+                                   },
                                    style: ElevatedButton.styleFrom(
                                      primary: Colors.transparent,
                                      elevation: 0,
                                    ),
                                    child: Column(
                                      children: [
-                                       Icon(Icons.timer,color: Colors.red,),
+                                       Icon(Icons.support_agent_sharp,color: Colors.red,),
                                        Text(
-                                         'Timings',
+                                         'Help & Info',
                                          style: TextStyle(fontSize: 15,color: Colors.black),
                                          textAlign: TextAlign.center,
                                        ),
@@ -310,9 +318,16 @@ class _JourneyPageState extends State<JourneyPage> {
                   },
                   items: [
                     'Select Station', // Default option
-                    'Station 1',
-                    'Station 2',
-                    'Station 3',
+                    'Shaheed Sthal (NBA)',
+                    'Hindon River',
+                    'Arthala',
+                    'Dilshad Garden',
+                    'Mansarovar Park',
+                    'Jhilmil',
+                    'Shahdara',
+                    'Welcome',
+                    'Kashmere Gate',
+                    'Inderlok',
                     // Add more stations as needed
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -335,9 +350,16 @@ class _JourneyPageState extends State<JourneyPage> {
                   },
                   items: [
                     'Select Station', // Default option
-                    'Station A',
-                    'Station B',
-                    'Station C',
+                    'Shaheed Sthal (NBA)',
+                    'Hindon River',
+                    'Arthala',
+                    'Dilshad Garden',
+                    'Mansarovar Park',
+                    'Jhilmil',
+                    'Shahdara',
+                    'Welcome',
+                    'Kashmere Gate',
+                    'Inderlok',
                     // Add more stations as needed
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -430,7 +452,17 @@ class _JourneyPageState extends State<JourneyPage> {
 }
 
 
-class BookQRTicketPage extends StatelessWidget {
+class BookQRTicketPage extends StatefulWidget {
+  @override
+  _BookQRTicketPageState createState() => _BookQRTicketPageState();
+}
+
+class _BookQRTicketPageState extends State<BookQRTicketPage> {
+  String departFrom = 'Select Station';
+  String destination = 'Select Station';
+  int routePreference = 0; // 0 for Shortest Route, 1 for Min Interchange
+  double costPerStation = 10.0; // Adjust the cost as needed
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -440,75 +472,61 @@ class BookQRTicketPage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Depart From:',
-              style: TextStyle(fontSize: 16.0),
-            ),
-            DropdownButton<String>(
-              value: 'Select Station',
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Depart From',
+                border: OutlineInputBorder(),
+              ),
+              value: departFrom,
               onChanged: (String? newValue) {
-                // Handle dropdown value change
+                setState(() {
+                  departFrom = newValue!;
+                });
               },
-              items: <String>[
-                'Select Station',
-                'Station A',
-                'Station B',
-                'Station C',
-                // Add more station names as needed
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+              items: getStationDropdownItems(),
             ),
             SizedBox(height: 16.0),
-            Text(
-              'Destination:',
-              style: TextStyle(fontSize: 16.0),
-            ),
-            DropdownButton<String>(
-              value: 'Select Station',
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Destination',
+                border: OutlineInputBorder(),
+              ),
+              value: destination,
               onChanged: (String? newValue) {
-                // Handle dropdown value change
+                setState(() {
+                  destination = newValue!;
+                });
               },
-              items: <String>[
-                'Select Station',
-                'Station A',
-                'Station B',
-                'Station C',
-                // Add more station names as needed
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+              items: getStationDropdownItems(),
             ),
             SizedBox(height: 16.0),
             Text(
               'Choose Route Preference:',
               style: TextStyle(fontSize: 16.0),
             ),
-             SingleChildScrollView(
-               scrollDirection: Axis.horizontal,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
                   Radio(
                     value: 0,
-                    groupValue: 0,
+                    groupValue: routePreference,
                     onChanged: (int? value) {
-                      // Handle radio button selection
+                      setState(() {
+                        routePreference = value!;
+                      });
                     },
                   ),
                   Text('Shortest Route'),
                   Radio(
                     value: 1,
-                    groupValue: 0,
+                    groupValue: routePreference,
                     onChanged: (int? value) {
-                      // Handle radio button selection
+                      setState(() {
+                        routePreference = value!;
+                      });
                     },
                   ),
                   Text('Min Interchange'),
@@ -518,7 +536,7 @@ class BookQRTicketPage extends StatelessWidget {
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                // Handle button press
+                _showFareDialog();
               },
               child: Text('Show Fare'),
             ),
@@ -527,8 +545,80 @@ class BookQRTicketPage extends StatelessWidget {
       ),
     );
   }
-}
 
+  List<DropdownMenuItem<String>> getStationDropdownItems() {
+    return [
+      'Select Station',
+      'Shaheed Sthal (NBA)',
+      'Hindon River',
+      'Arthala',
+      'Dilshad Garden',
+      'Mansarovar Park',
+      'Jhilmil',
+      'Shahdara',
+      'Welcome',
+      'Kashmere Gate',
+      'Inderlok',
+      // Add more station names as needed
+    ].map<DropdownMenuItem<String>>((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      );
+    }).toList();
+  }
+
+  void _showFareDialog() {
+    if (departFrom != 'Select Station' &&
+        destination != 'Select Station' &&
+        departFrom != destination) {
+      int stationsTravelled = calculateStationsTravelled();
+      double totalFare = stationsTravelled * costPerStation;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Fare Details'),
+            content: Text('Total Fare: ₹$totalFare'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Handle invalid selection (same departFrom and destination)
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Invalid Selection'),
+            content: Text('Please select valid departure and destination stations.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  int calculateStationsTravelled() {
+    // Implement logic to calculate stations travelled based on the selected route preference
+    // For simplicity, returning a random number here
+    return 1;
+  }
+}
 class AddMetroSmartCardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -598,65 +688,34 @@ class CalculateFare extends StatelessWidget {
                     },
                   ),
                   Text('Shortest Route'),
-                  Radio(
-                    value: 1,
-                    groupValue: 0,
-                    onChanged: (int? value) {
-                      // Handle radio button selection
-                    },
-                  ),
-                  Text('Min Interchange'),
+
                 ],
               ),
             ),
-            SizedBox(height: 10,),
-            Text(
-              'Depart From:',
-              style: TextStyle(fontSize: 16.0),
-            ),
-            DropdownButton<String>(
+            SizedBox(height: 10),
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Depart From',
+                border: OutlineInputBorder(),
+              ),
               value: 'Select Station',
               onChanged: (String? newValue) {
                 // Handle dropdown value change
               },
-              items: <String>[
-                'Select Station',
-                'Station A',
-                'Station B',
-                'Station C',
-                // Add more station names as needed
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+              items: getStationDropdownItems(),
             ),
             SizedBox(height: 16.0),
-            Text(
-              'Destination:',
-              style: TextStyle(fontSize: 16.0),
-            ),
-            DropdownButton<String>(
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Destination',
+                border: OutlineInputBorder(),
+              ),
               value: 'Select Station',
               onChanged: (String? newValue) {
                 // Handle dropdown value change
               },
-              items: <String>[
-                'Select Station',
-                'Station A',
-                'Station B',
-                'Station C',
-                // Add more station names as needed
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+              items: getStationDropdownItems(),
             ),
-
-
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
@@ -665,6 +724,105 @@ class CalculateFare extends StatelessWidget {
               child: Text('Calculate Fare'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  List<DropdownMenuItem<String>> getStationDropdownItems() {
+    return [
+      'Select Station',
+      'Shaheed Sthal (NBA)',
+      'Hindon River',
+      'Arthala',
+      'Dilshad Garden',
+      'Mansarovar Park',
+      'Jhilmil',
+      'Shahdara',
+      'Welcome',
+      'Kashmere Gate',
+      'Inderlok',
+      // Add more station names as needed
+    ].map<DropdownMenuItem<String>>((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      );
+    }).toList();
+  }
+}
+
+class MetroLines extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Metro Lines'),
+      ),
+      body: ListView(
+        children: [
+          _buildLineCard('Red Line', Icons.train, Colors.red),
+          _buildLineCard('Yellow Line', Icons.train, Colors.yellow),
+          _buildLineCard('Blue Line', Icons.train, Colors.blue),
+          _buildLineCard('Pink Line', Icons.train, Colors.pink),
+          _buildLineCard('Violet Line', Icons.train, Colors.deepPurpleAccent),
+          _buildLineCard('Grey Line', Icons.train, Colors.grey),
+          _buildLineCard('Airport Line', Icons.train, Colors.deepOrangeAccent),
+          // Add more lines as needed
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLineCard(String lineName, IconData icon, Color iconColor) {
+    return Card(
+      child: ListTile(
+        title: Text(lineName),
+        leading: Icon(
+          icon,
+          color: iconColor,
+        ),
+      ),
+    );
+  }
+}
+
+
+class Help extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Help & Info.'),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: [
+          _buildEmergencyCard('Police Helpline', '112'),
+          _buildEmergencyCard('Women Helpline', '1091'),
+          _buildEmergencyCard('Senior Citizen Helpline', '1291'),
+          _buildEmergencyCard('Missing Helpline', '011-23415480'),
+          _buildEmergencyCard('DMRC Support Email', 'dmrc.support@gmail.com'),
+          // Add more emergency contacts as needed
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmergencyCard(String title, String contact) {
+    return Card(
+      child: ListTile(
+        title: Center(
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        subtitle: Center(
+          child: Text(
+            contact,
+            style: TextStyle(fontSize: 16.0),
+          ),
         ),
       ),
     );

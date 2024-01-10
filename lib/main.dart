@@ -76,8 +76,8 @@ class NoticePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('How to use App'),
-              Text('Shake 2 times to Plan your Trip'),
-              Text('Shake 4 times to Book QR Ticket'),
+              Text('Shake 2 times to Plan your Trip &'),
+              Text('Shake 2 more times to Book QR Ticket'),
               ElevatedButton(onPressed: (){Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => TestApp()),
