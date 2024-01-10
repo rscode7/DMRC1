@@ -38,6 +38,8 @@ dependencies:
   audioplayers: ^5.2.1
   shake: ^2.2.0
   vibration: ^1.8.4
+  url_launcher: ^6.1.14
+  http: ^1.1.0
 
 
 dev_dependencies:

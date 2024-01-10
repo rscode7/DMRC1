@@ -4,6 +4,7 @@ import 'package:dmrc1/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
 import 'package:vibration/vibration.dart';
+
 class TestApp extends StatefulWidget {
   const TestApp({super.key});
 
@@ -36,6 +37,7 @@ class _TestAppState extends State<TestApp> {
           );
           Vibration.vibrate();
         }
+
 
         // Reset the shake count after each set of operations
 
