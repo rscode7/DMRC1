@@ -3,6 +3,7 @@ import 'package:dmrc1/Journey.dart';
 import 'package:dmrc1/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
 class TestApp extends StatefulWidget {
@@ -966,6 +967,15 @@ class Help extends StatefulWidget {
 }
 
 class _HelpState extends State<Help> {
+
+  _launchURL1() async {
+    const url = "tel://112"; // Replace with the URL you want to open
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -1003,6 +1013,24 @@ class _HelpState extends State<Help> {
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
+          ElevatedButton(
+            onPressed: () {
+              _launchURL1();
+            },
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero, // Remove default padding
+            ),
+            child: Container(
+              padding: EdgeInsets.all(16.0), // Add padding to the container
+              child: Text(
+                'Police Helpline: 112',
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.black, // Text color
+                ),
+              ),
+            ),
+          ),
           _buildEmergencyCard('Police Helpline', '112'),
           _buildEmergencyCard('Women Helpline', '1091'),
           _buildEmergencyCard('Senior Citizen Helpline', '1291'),
