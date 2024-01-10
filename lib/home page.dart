@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dmrc1/Journey.dart';
+import 'package:dmrc1/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
 import 'package:vibration/vibration.dart';
@@ -33,19 +34,12 @@ class _TestAppState extends State<TestApp> {
             context,
             MaterialPageRoute(builder: (context) => JourneyPage()),
           );
-          Vibration.vibrate( pattern: [500, 1000, 500, 2000, 500, 3000, 500, 500],
-            intensities: [0, 128, 0, 255, 0, 64, 0, 255],);
-        } else if (shakeCount == 4) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => BookQRTicketPage()),
-          );
+          Vibration.vibrate();
         }
 
         // Reset the shake count after each set of operations
-        if (shakeCount >= 4) {
-          shakeCount = 0;
-        }
+
+
       },
       minimumShakeCount: 2,
       shakeSlopTimeMS: 400,
@@ -60,6 +54,7 @@ class _TestAppState extends State<TestApp> {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: SafeArea(
         child: Scaffold(
             appBar: AppBar(
@@ -293,6 +288,35 @@ class _JourneyPageState extends State<JourneyPage> {
   String? _selectedDestination;
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    int shakeCount = 0;
+
+    ShakeDetector.autoStart(
+      onPhoneShake: () {
+        shakeCount++;
+
+        // Check the number of shakes and perform corresponding operations
+        if (shakeCount == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => BookQRTicketPage()),
+          );
+          Vibration.vibrate();
+        }
+
+        // Reset the shake count after each set of operations
+
+
+      },
+      minimumShakeCount: 2,
+      shakeSlopTimeMS: 400,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -464,7 +488,35 @@ class _BookQRTicketPageState extends State<BookQRTicketPage> {
   String departFrom = 'Select Station';
   String destination = 'Select Station';
   int routePreference = 0; // 0 for Shortest Route, 1 for Min Interchange
-  double costPerStation = 1.0; // Adjust the cost as needed
+  double costPerStation = 1.0;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    int shakeCount = 0;
+
+    ShakeDetector.autoStart(
+      onPhoneShake: () {
+        shakeCount++;
+
+        // Check the number of shakes and perform corresponding operations
+        if (shakeCount == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddMetroSmartCardPage()),
+          );
+          Vibration.vibrate();
+        }
+
+        // Reset the shake count after each set of operations
+
+
+      },
+      minimumShakeCount: 2,
+      shakeSlopTimeMS: 400,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
+  }// Adjust the cost as needed
 
   List<String> stations = [
     'Select Station',
@@ -638,7 +690,40 @@ class _BookQRTicketPageState extends State<BookQRTicketPage> {
 }
 
 
-class AddMetroSmartCardPage extends StatelessWidget {
+class AddMetroSmartCardPage extends StatefulWidget {
+  @override
+  State<AddMetroSmartCardPage> createState() => _AddMetroSmartCardPageState();
+}
+
+class _AddMetroSmartCardPageState extends State<AddMetroSmartCardPage> {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    int shakeCount = 0;
+
+    ShakeDetector.autoStart(
+      onPhoneShake: () {
+        shakeCount++;
+
+        // Check the number of shakes and perform corresponding operations
+        if (shakeCount == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CalculateFare()),
+          );
+          Vibration.vibrate();
+        }
+
+        // Reset the shake count after each set of operations
+
+
+      },
+      minimumShakeCount: 2,
+      shakeSlopTimeMS: 400,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -683,7 +768,40 @@ class AddMetroSmartCardPage extends StatelessWidget {
   }
 }
 
-class CalculateFare extends StatelessWidget {
+class CalculateFare extends StatefulWidget {
+  @override
+  State<CalculateFare> createState() => _CalculateFareState();
+}
+
+class _CalculateFareState extends State<CalculateFare> {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    int shakeCount = 0;
+
+    ShakeDetector.autoStart(
+      onPhoneShake: () {
+        shakeCount++;
+
+        // Check the number of shakes and perform corresponding operations
+        if (shakeCount == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MetroLines()),
+          );
+          Vibration.vibrate();
+        }
+
+        // Reset the shake count after each set of operations
+
+
+      },
+      minimumShakeCount: 2,
+      shakeSlopTimeMS: 400,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -771,7 +889,40 @@ class CalculateFare extends StatelessWidget {
   }
 }
 
-class MetroLines extends StatelessWidget {
+class MetroLines extends StatefulWidget {
+  @override
+  State<MetroLines> createState() => _MetroLinesState();
+}
+
+class _MetroLinesState extends State<MetroLines> {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    int shakeCount = 0;
+
+    ShakeDetector.autoStart(
+      onPhoneShake: () {
+        shakeCount++;
+
+        // Check the number of shakes and perform corresponding operations
+        if (shakeCount == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Help()),
+          );
+          Vibration.vibrate();
+        }
+
+        // Reset the shake count after each set of operations
+
+
+      },
+      minimumShakeCount: 2,
+      shakeSlopTimeMS: 400,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -807,7 +958,40 @@ class MetroLines extends StatelessWidget {
 }
 
 
-class Help extends StatelessWidget {
+class Help extends StatefulWidget {
+  @override
+  State<Help> createState() => _HelpState();
+}
+
+class _HelpState extends State<Help> {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    int shakeCount = 0;
+
+    ShakeDetector.autoStart(
+      onPhoneShake: () {
+        shakeCount++;
+
+        // Check the number of shakes and perform corresponding operations
+        if (shakeCount == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TestApp()),
+          );
+          Vibration.vibrate();
+        }
+
+        // Reset the shake count after each set of operations
+
+
+      },
+      minimumShakeCount: 2,
+      shakeSlopTimeMS: 400,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
