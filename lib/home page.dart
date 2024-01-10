@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dmrc1/Journey.dart';
 import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
+import 'package:vibration/vibration.dart';
 class TestApp extends StatefulWidget {
   const TestApp({super.key});
 
@@ -32,6 +33,8 @@ class _TestAppState extends State<TestApp> {
             context,
             MaterialPageRoute(builder: (context) => JourneyPage()),
           );
+          Vibration.vibrate( pattern: [500, 1000, 500, 2000, 500, 3000, 500, 500],
+            intensities: [0, 128, 0, 255, 0, 64, 0, 255],);
         } else if (shakeCount == 4) {
           Navigator.push(
             context,
@@ -461,7 +464,39 @@ class _BookQRTicketPageState extends State<BookQRTicketPage> {
   String departFrom = 'Select Station';
   String destination = 'Select Station';
   int routePreference = 0; // 0 for Shortest Route, 1 for Min Interchange
-  double costPerStation = 10.0; // Adjust the cost as needed
+  double costPerStation = 1.0; // Adjust the cost as needed
+
+  List<String> stations = [
+    'Select Station',
+    'Shaheed Sthal (NBA)',
+    'Hindon River',
+    'Arthala',
+    'Dilshad Garden',
+    'Mansarovar Park',
+    'Jhilmil',
+    'Shahdara',
+    'Welcome',
+    'Kashmere Gate',
+    'Inderlok',
+    // Add more station names as needed
+  ];
+
+  double calculateFare() {
+    if (departFrom != 'Select Station' &&
+        destination != 'Select Station' &&
+        departFrom != destination) {
+      int departIndex = stations.indexOf(departFrom);
+      int destinationIndex = stations.indexOf(destination);
+
+      if (departIndex != -1 && destinationIndex != -1) {
+        int stationsTravelled = (destinationIndex - departIndex).abs() ;
+        double totalFare = (stationsTravelled + costPerStation)*10;
+        return totalFare;
+      }
+    }
+
+    return costPerStation; // Default, return cost for 1 station if calculation fails
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -547,20 +582,7 @@ class _BookQRTicketPageState extends State<BookQRTicketPage> {
   }
 
   List<DropdownMenuItem<String>> getStationDropdownItems() {
-    return [
-      'Select Station',
-      'Shaheed Sthal (NBA)',
-      'Hindon River',
-      'Arthala',
-      'Dilshad Garden',
-      'Mansarovar Park',
-      'Jhilmil',
-      'Shahdara',
-      'Welcome',
-      'Kashmere Gate',
-      'Inderlok',
-      // Add more station names as needed
-    ].map<DropdownMenuItem<String>>((String value) {
+    return stations.map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem<String>(
         value: value,
         child: Text(value),
@@ -572,7 +594,7 @@ class _BookQRTicketPageState extends State<BookQRTicketPage> {
     if (departFrom != 'Select Station' &&
         destination != 'Select Station' &&
         departFrom != destination) {
-      int stationsTravelled = calculateStationsTravelled();
+      double stationsTravelled = calculateFare();
       double totalFare = stationsTravelled * costPerStation;
       showDialog(
         context: context,
@@ -598,7 +620,8 @@ class _BookQRTicketPageState extends State<BookQRTicketPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Invalid Selection'),
-            content: Text('Please select valid departure and destination stations.'),
+            content: Text(
+                'Please select valid departure and destination stations.'),
             actions: [
               ElevatedButton(
                 onPressed: () {
@@ -612,13 +635,9 @@ class _BookQRTicketPageState extends State<BookQRTicketPage> {
       );
     }
   }
-
-  int calculateStationsTravelled() {
-    // Implement logic to calculate stations travelled based on the selected route preference
-    // For simplicity, returning a random number here
-    return 1;
-  }
 }
+
+
 class AddMetroSmartCardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
